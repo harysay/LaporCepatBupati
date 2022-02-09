@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="id.go.kebumenkab.laporcepatbupati.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_statistik"
+        android:name="id.go.kebumenkab.laporcepatbupati.ui.statistik.StatistikFragment"
+        android:label="Statistik"
+        tools:layout="@layout/fragment_statistik" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="id.go.kebumenkab.laporcepatbupati.ui.history.HistoryFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_history" />
+</navigation>

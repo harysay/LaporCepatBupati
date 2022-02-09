@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="hijaulapoorbup">#1abc9c</color>
+    <color name="hijautombollaporbup">#10c469</color>
+    <color name="merahlaporbup">#E62129</color>
+
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#4ad481</color>
+
+    <color name="colorBelum">#61c8f7</color>
+    <color name="colorSedang">#2e93e1</color>
+    <color name="colorSelesai">#1b47d8</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorTextTitle">#403f3f</color>
+    <color name="colorTextDate">#848383</color>
+
+    <color name="placeholder_bg">#dddddd</color>
+    <color name="item_name">#0c0c0c</color>
+    <color name="description">#1a1a1a</color>
+    <color name="chef">#777</color>
+    <color name="timestamp">#777</color>
+    <color name="transparent">#9B000000</color>
+
+    <color name="grey">#6e6c6c</color>
+    <color name="navy">#021430</color>
+
+    <color name="grey_light">#eceff1</color>
+    <color name="red_smooth">#D81B60</color>
+    <color name="redDark">#c30000</color>
+    <color name="orangeLight">#ff3d00</color>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Lapor Cepat Bupati</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAlU1kCE-ryYU5S89QMUqfBnGjPLipSBo8</string>
+</resources>

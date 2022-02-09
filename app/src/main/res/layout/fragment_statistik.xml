@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="always"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarSize="10dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp">
+            <TableLayout
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*" />
+            </HorizontalScrollView>
+        </LinearLayout>
+        <Button
+            android:id="@+id/button_parse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Load" />
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:padding="2dp"
+            android:scrollbarThumbHorizontal="@color/colorAccent">
+
+            <LinearLayout
+                android:id="@+id/btnLay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell_shape_grey"
+                android:orientation="horizontal"
+                android:padding="2dp" />
+        </HorizontalScrollView>
+
+    </LinearLayout>
+</ScrollView>

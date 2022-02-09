@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_weight="7"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:context=".MapsActivity" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:layout_height="0dp"
+            android:textSize="24sp"
+            android:layout_weight="1"
+            android:text="Simpan"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonCurrent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:drawableLeft="@drawable/ic_my_location_black_24dp"
+                android:text="Lokasiku"
+                android:visibility="gone"/>
+
+
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

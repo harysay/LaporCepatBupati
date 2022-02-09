@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical"
+    tools:context=".ui.home.HomeFragment">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="50dp"
+                android:gravity="center|top"
+                android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imageLapoCepat"
+                        android:layout_width="320dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/headerlaporcepat"
+                        android:layout_gravity="start" />
+                    <ImageView
+                        android:id="@+id/imageBupati"
+                        android:layout_width="320dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bupati"
+                        android:layout_gravity="right" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|bottom"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/text_homeSilahkan"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginEnd="75dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/grey"
+                        android:text="Silakan klik tombol \nLAPOR CEPAT \nuntuk memulai aduan"
+                        android:textSize="20sp" />
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:gravity="bottom"
+                        android:background="@drawable/tombol"
+                        android:id="@+id/btnLaporCepat"
+                        android:layout_marginRight="75dp"
+                        android:layout_gravity="center_horizontal"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="20dp"
+                android:orientation="vertical">
+                <TextView
+                android:id="@+id/text_kanal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:text="atau melalui kanal di bawah ini:"
+                android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="0dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="5dp"
+                        android:id="@+id/wa"
+                        android:src="@drawable/wa"/>
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="5dp"
+                        android:id="@+id/instagram"
+                        android:src="@drawable/ig"/>
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="5dp"
+                        android:id="@+id/twitter"
+                        android:src="@drawable/tw"/>
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="5dp"
+                        android:id="@+id/facebook"
+                        android:src="@drawable/fb"/>
+                </LinearLayout>
+            </LinearLayout>
+</RelativeLayout>
