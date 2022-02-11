@@ -42,7 +42,7 @@ import java.util.List;
 public class StatistikFragment extends Fragment implements View.OnClickListener {
 
     View rootStatistik;
-    private Button buttonLoad;
+//    private Button buttonLoad;
     private TableLayout tableLayout;
     private ProgressDialog mProgressBar;
     private int PAGE_SIZE = 50;
@@ -57,7 +57,7 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         rootStatistik = inflater.inflate(R.layout.fragment_statistik, container, false);
-        buttonLoad = rootStatistik.findViewById(R.id.button_parse);
+//        buttonLoad = rootStatistik.findViewById(R.id.button_parse);
         tableLayout = rootStatistik.findViewById(R.id.table);
         tableLayout.setStretchAllColumns(true);
         mProgressBar = new ProgressDialog(getActivity());
@@ -65,12 +65,13 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         buttonLayout = rootStatistik.findViewById(R.id.btnLay);
 
         scrollView = rootStatistik.findViewById(R.id.scroll_view);
-        buttonLoad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getStatistik();
-            }
-        });
+//        buttonLoad.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getStatistik();
+//            }
+//        });
+        getStatistik();
         return rootStatistik;
     }
 
@@ -112,7 +113,7 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
                                 checkBtnBackGroud(0);
                                 sortData(buttonLayout, response.length(), PAGE_SIZE, aduans);
                                 mProgressBar.hide();
-                                buttonLoad.setVisibility(View.GONE);
+//                                buttonLoad.setVisibility(View.GONE);
 
                             } catch (JSONException e) {
                                 mProgressBar.hide();

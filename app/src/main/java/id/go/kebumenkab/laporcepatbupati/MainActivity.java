@@ -81,64 +81,42 @@ public class MainActivity extends AppCompatActivity {
                 // TODO
             }
         }else {
-            BottomNavigationView navView = findViewById(R.id.nav_view);
-            if(usrEmailSession.equals("harypoenya91@gmail.com")){
-                AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.navigation_home, R.id.navigation_statistik, R.id.navigation_history).build();
-                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-                NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-                NavigationUI.setupWithNavController(navView, navController);
-            }else {
-                navView.getMenu().removeItem(R.id.navigation_statistik);
-                AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.navigation_home, R.id.navigation_history).build();
-                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-                NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-                NavigationUI.setupWithNavController(navView, navController);
-            }
+            getViewByUser(usrEmailSession);
         }
-
-
-
     }
 
+    private void getViewByUser(String accountName){
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        if(accountName.equals("harypoenya91@gmail.com")){
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_home, R.id.navigation_statistik, R.id.navigation_history).build();
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(navView, navController);
+        }else {
+            navView.getMenu().removeItem(R.id.navigation_statistik);
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_home, R.id.navigation_history).build();
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(navView, navController);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-
         if (requestCode == REQUEST_CODE_EMAIL && resultCode == RESULT_OK) {
-            String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+            String emailName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
             deviceId = Settings.Secure.getString(getContentResolver(),
                     Settings.Secure.ANDROID_ID);
-            if(accountName.equals("harypoenya91@gmail.com")){
-                AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.navigation_home, R.id.navigation_statistik, R.id.navigation_history).build();
-                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-                NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-                NavigationUI.setupWithNavController(navView, navController);
-            }else {
-                navView.getMenu().removeItem(R.id.navigation_statistik);
-                AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.navigation_home, R.id.navigation_history).build();
-                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-                NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-                NavigationUI.setupWithNavController(navView, navController);
-            }
-            //email.setText(accountName);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("email", accountName);
-//                        bundle.putString("device_id", deviceId);
-//                        // set Fragmentclass Arguments
-//                        HomeFragment fragobj = new HomeFragment();
-//                        fragobj.setArguments(bundle);
+            getViewByUser(emailName);
             SharedPreferences sp = getSharedPreferences("logSession", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putString("email", accountName);
+            editor.putString("email", emailName);
             editor.putString("deviceid",deviceId);
             editor.commit();
-            Toast.makeText(MainActivity.this, accountName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, emailName, Toast.LENGTH_SHORT).show();
         }else {
 //            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
 //            alertDialog.setTitle("Peringatan");
