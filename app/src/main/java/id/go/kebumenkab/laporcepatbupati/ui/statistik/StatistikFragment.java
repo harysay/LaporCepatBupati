@@ -105,7 +105,7 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
                                     String persenAduanProses = jsonPost.getString("persen_proses");
                                     String persenAduanSelesai = jsonPost.getString("persen_selesai");
                                     int total = Integer.parseInt(jumlAduanBelum) + Integer.parseInt(jumlAduanProses) + Integer.parseInt(jumlAduanSelesai);
-                                    aduans.add(new Aduan(namaKategori, namaSkpd, jumlAduanBelum, jumlAduanProses,jumlAduanSelesai,persenAduanBelum,persenAduanProses,persenAduanSelesai,String.valueOf(total)));
+                                    aduans.add(new Aduan(namaKategori, namaSkpd, jumlAduanBelum+" \n("+persenAduanBelum+"%)", jumlAduanProses+" \n("+persenAduanProses+"%)",jumlAduanSelesai+" \n("+persenAduanSelesai+"%)",persenAduanBelum,persenAduanProses,persenAduanSelesai,String.valueOf(total)));
                                 }
                                 createTableHeader();
                                 createTable(aduans, 0);
@@ -175,10 +175,10 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         final TextView tvJmlBelum = (TextView) tableRowHeader.getChildAt(3);
         final TextView tvJmlProses = (TextView) tableRowHeader.getChildAt(4);
         final TextView tvJmlSelesai = (TextView) tableRowHeader.getChildAt(5);
-        final TextView tvPersenBlm = (TextView) tableRowHeader.getChildAt(6);
-        final TextView tvPersenProses = (TextView) tableRowHeader.getChildAt(7);
-        final TextView tvPersenSelesai = (TextView) tableRowHeader.getChildAt(8);
-        final TextView tvTotal = (TextView) tableRowHeader.getChildAt(9);
+//        final TextView tvPersenBlm = (TextView) tableRowHeader.getChildAt(6);
+//        final TextView tvPersenProses = (TextView) tableRowHeader.getChildAt(7);
+//        final TextView tvPersenSelesai = (TextView) tableRowHeader.getChildAt(8);
+        final TextView tvTotal = (TextView) tableRowHeader.getChildAt(6);
         tvKategori.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,56 +200,59 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         tvJmlBelum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SortUtil.sortByJmlBelum(aduans);
-                createTable(aduans, 0);
-                checkBtnBackGroud(0);
+//                SortUtil.sortByJmlBelum(aduans);
+//                createTable(aduans, 0);
+//                checkBtnBackGroud(0);
+                Toast.makeText(getActivity(), "Silahkan Klik Total untuk mengurutkan!", Toast.LENGTH_SHORT).show();
             }
         });
 
         tvJmlProses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SortUtil.sortByJmlProses(aduans);
-                createTable(aduans, 0);
-                checkBtnBackGroud(0);
+//                SortUtil.sortByJmlProses(aduans);
+//                createTable(aduans, 0);
+//                checkBtnBackGroud(0);
+                Toast.makeText(getActivity(), "Silahkan Klik Total untuk mengurutkan!", Toast.LENGTH_SHORT).show();
             }
         });
 
         tvJmlSelesai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SortUtil.sortByJmlSelesai(aduans);
-                createTable(aduans, 0);
-                checkBtnBackGroud(0);
+//                SortUtil.sortByJmlSelesai(aduans);
+//                createTable(aduans, 0);
+//                checkBtnBackGroud(0);
+                Toast.makeText(getActivity(), "Silahkan Klik Total untuk mengurutkan!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        tvPersenBlm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SortUtil.sortByPersenBlm(aduans);
-                createTable(aduans, 0);
-                checkBtnBackGroud(0);
-            }
-        });
+//        tvPersenBlm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                SortUtil.sortByPersenBlm(aduans);
+//                createTable(aduans, 0);
+//                checkBtnBackGroud(0);
+//            }
+//        });
 
-        tvPersenProses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SortUtil.sortByPersenProses(aduans);
-                createTable(aduans, 0);
-                checkBtnBackGroud(0);
-            }
-        });
-
-        tvPersenSelesai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SortUtil.sortByPersenSelesai(aduans);
-                createTable(aduans, 0);
-                checkBtnBackGroud(0);
-            }
-        });
+//        tvPersenProses.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                SortUtil.sortByPersenProses(aduans);
+//                createTable(aduans, 0);
+//                checkBtnBackGroud(0);
+//            }
+//        });
+//
+//        tvPersenSelesai.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                SortUtil.sortByPersenSelesai(aduans);
+//                createTable(aduans, 0);
+//                checkBtnBackGroud(0);
+//            }
+//        });
 
         tvTotal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,7 +265,7 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
     }
 
 
-    private void createTableRow(String nomor, String kategori, String skpd, String jmlbelum, String jmlproses, String jmlselesai, String persenblm, String persenproses, String persenselesai, String totalAdu, int index) {
+    private void createTableRow(String nomor, String kategori, String skpd, String jmlbelum, String jmlproses, String jmlselesai, String totalAdu, int index) {
         TableRow tableRow = new TableRow(getActivity());
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         tableRow.setLayoutParams(lp);
@@ -286,9 +289,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         TextView textViewJmlBlm = new TextView(getActivity());
         TextView textViewJmlProses = new TextView(getActivity());
         TextView textViewJmlSelesai = new TextView(getActivity());
-        TextView textViewPersenBlm = new TextView(getActivity());
-        TextView textViewPersenProses = new TextView(getActivity());
-        TextView textViewPersenSelesai = new TextView(getActivity());
+//        TextView textViewPersenBlm = new TextView(getActivity());
+//        TextView textViewPersenProses = new TextView(getActivity());
+//        TextView textViewPersenSelesai = new TextView(getActivity());
         TextView textViewTotal = new TextView(getActivity());
 
         textViewNo.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0));
@@ -297,9 +300,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         textViewJmlBlm.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0));
         textViewJmlProses.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f));
         textViewJmlSelesai.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0));
-        textViewPersenBlm.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f));
-        textViewPersenProses.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0));
-        textViewPersenSelesai.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f));
+//        textViewPersenBlm.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f));
+//        textViewPersenProses.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0));
+//        textViewPersenSelesai.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f));
         textViewTotal.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f));
 
         textViewNo.setGravity(Gravity.CENTER);
@@ -308,9 +311,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         textViewJmlBlm.setGravity(Gravity.CENTER);
         textViewJmlProses.setGravity(Gravity.CENTER);
         textViewJmlSelesai.setGravity(Gravity.CENTER);
-        textViewPersenBlm.setGravity(Gravity.CENTER);
-        textViewPersenProses.setGravity(Gravity.CENTER);
-        textViewPersenSelesai.setGravity(Gravity.CENTER);
+//        textViewPersenBlm.setGravity(Gravity.CENTER);
+//        textViewPersenProses.setGravity(Gravity.CENTER);
+//        textViewPersenSelesai.setGravity(Gravity.CENTER);
         textViewTotal.setGravity(Gravity.CENTER);
 
         textViewSkpd.setMaxLines(3);
@@ -318,9 +321,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         textViewJmlProses.setMaxLines(2);
         textViewJmlBlm.setMaxLines(2);
         textViewJmlSelesai.setMaxLines(2);
-        textViewPersenBlm.setMaxLines(2);
-        textViewPersenProses.setMaxLines(2);
-        textViewPersenSelesai.setMaxLines(2);
+//        textViewPersenBlm.setMaxLines(2);
+//        textViewPersenProses.setMaxLines(2);
+//        textViewPersenSelesai.setMaxLines(2);
         textViewTotal.setMaxLines(2);
 
         textViewNo.setPadding(5, 15, 5, 15);
@@ -329,9 +332,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         textViewJmlBlm.setPadding(5, 15, 5, 15);
         textViewJmlProses.setPadding(5, 15, 5, 15);
         textViewJmlSelesai.setPadding(5, 15, 5, 15);
-        textViewPersenBlm.setPadding(5, 15, 5, 15);
-        textViewPersenProses.setPadding(5, 15, 5, 15);
-        textViewPersenSelesai.setPadding(5, 15, 5, 15);
+//        textViewPersenBlm.setPadding(5, 15, 5, 15);
+//        textViewPersenProses.setPadding(5, 15, 5, 15);
+//        textViewPersenSelesai.setPadding(5, 15, 5, 15);
         textViewTotal.setPadding(5, 15, 5, 15);
 
         textViewNo.setText(nomor);
@@ -340,9 +343,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         textViewJmlBlm.setText(jmlbelum);
         textViewJmlProses.setText(jmlproses);
         textViewJmlSelesai.setText(jmlselesai);
-        textViewPersenBlm.setText(persenblm);
-        textViewPersenProses.setText(persenproses);
-        textViewPersenSelesai.setText(persenselesai);
+//        textViewPersenBlm.setText(persenblm);
+//        textViewPersenProses.setText(persenproses);
+//        textViewPersenSelesai.setText(persenselesai);
         textViewTotal.setText(totalAdu);
         
 
@@ -352,10 +355,10 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         textViewJmlBlm.setBackgroundResource(R.drawable.cell_shape_grey);
         textViewJmlProses.setBackgroundResource(R.drawable.cell_shape_white);
         textViewJmlSelesai.setBackgroundResource(R.drawable.cell_shape_grey);
-        textViewPersenBlm.setBackgroundResource(R.drawable.cell_shape_white);
-        textViewPersenProses.setBackgroundResource(R.drawable.cell_shape_grey);
-        textViewPersenSelesai.setBackgroundResource(R.drawable.cell_shape_white);
-        textViewTotal.setBackgroundResource(R.drawable.cell_shape_grey);
+//        textViewPersenBlm.setBackgroundResource(R.drawable.cell_shape_white);
+//        textViewPersenProses.setBackgroundResource(R.drawable.cell_shape_grey);
+//        textViewPersenSelesai.setBackgroundResource(R.drawable.cell_shape_white);
+        textViewTotal.setBackgroundResource(R.drawable.cell_shape_white);
 
         tableRow.addView(textViewNo);
         tableRow.addView(textViewKategori);
@@ -363,9 +366,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         tableRow.addView(textViewJmlBlm);
         tableRow.addView(textViewJmlProses);
         tableRow.addView(textViewJmlSelesai);
-        tableRow.addView(textViewPersenBlm);
-        tableRow.addView(textViewPersenProses);
-        tableRow.addView(textViewPersenSelesai);
+//        tableRow.addView(textViewPersenBlm);
+//        tableRow.addView(textViewPersenProses);
+//        tableRow.addView(textViewPersenSelesai);
         tableRow.addView(textViewTotal);
 
         if (index == -1) {
@@ -376,19 +379,19 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
             textViewJmlBlm.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
             textViewJmlProses.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
             textViewJmlSelesai.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
-            textViewPersenBlm.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
-            textViewPersenProses.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
-            textViewPersenSelesai.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
+//            textViewPersenBlm.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
+//            textViewPersenProses.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
+//            textViewPersenSelesai.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
             textViewTotal.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) getResources().getDimension(R.dimen.font_size_small));
 
             textViewKategori.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
             textViewSkpd.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
-            textViewJmlBlm.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
-            textViewJmlProses.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
-            textViewJmlSelesai.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
-            textViewPersenBlm.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
-            textViewPersenProses.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
-            textViewPersenSelesai.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
+//            textViewJmlBlm.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
+//            textViewJmlProses.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
+//            textViewJmlSelesai.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
+//            textViewPersenBlm.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
+//            textViewPersenProses.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
+//            textViewPersenSelesai.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
             textViewTotal.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_sort_by_alpha_black, 0);
 
             textViewNo.setBackgroundResource(R.drawable.cell_shape_blue);
@@ -397,9 +400,9 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
             textViewJmlBlm.setBackgroundResource(R.drawable.cell_shape_blue);
             textViewJmlProses.setBackgroundResource(R.drawable.cell_shape_blue);
             textViewJmlSelesai.setBackgroundResource(R.drawable.cell_shape_blue);
-            textViewPersenBlm.setBackgroundResource(R.drawable.cell_shape_blue);
-            textViewPersenProses.setBackgroundResource(R.drawable.cell_shape_blue);
-            textViewPersenSelesai.setBackgroundResource(R.drawable.cell_shape_blue);
+//            textViewPersenBlm.setBackgroundResource(R.drawable.cell_shape_blue);
+//            textViewPersenProses.setBackgroundResource(R.drawable.cell_shape_blue);
+//            textViewPersenSelesai.setBackgroundResource(R.drawable.cell_shape_blue);
             textViewTotal.setBackgroundResource(R.drawable.cell_shape_blue);
         }
         tableLayout.addView(tableRow, index + 1);
@@ -407,7 +410,7 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
 
     private void createTableHeader() {
         tableLayout.removeAllViews();
-        createTableRow("No", "Kategori", "SKPD", "Belum", "Proses","Selesai","(%)Belum", "(%)Proses","(%)Selesai","Total", -1);
+        createTableRow("No", "Kategori", "SKPD", "Belum", "Proses","Selesai","Total", -1);
     }
 
     private void createTable(List<Aduan> aduans, int page) {
@@ -422,9 +425,6 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
                     aduans.get(j).getjumlAduanBelum(),
                     aduans.get(j).getjumlAduanProses(),
                     aduans.get(j).getJumlAduanSelesai(),
-                    aduans.get(j).getPersenBelum(),
-                    aduans.get(j).getPersenProses(),
-                    aduans.get(j).getPersenSelesai(),
                     aduans.get(j).getTotal(),
                     i
             );

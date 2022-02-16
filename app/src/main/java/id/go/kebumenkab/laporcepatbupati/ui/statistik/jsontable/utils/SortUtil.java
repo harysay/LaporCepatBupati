@@ -63,43 +63,43 @@ public class SortUtil implements Comparator<Aduan> {
             sort_asc = false;
         }
     }
-    public static void sortByPersenBlm(List<Aduan> data) {
+//    public static void sortByPersenBlm(List<Aduan> data) {
+//        if (SORT_FACTOR == 5 && sort_asc == false) {
+//            Collections.sort(data, Collections.reverseOrder(new SortUtil()));
+//            sort_asc = true;
+//        } else {
+//            SORT_FACTOR = 5;
+//            Collections.sort(data, new SortUtil());
+//            sort_asc = false;
+//        }
+//    }
+//    public static void sortByPersenProses(List<Aduan> data) {
+//        if (SORT_FACTOR == 6 && sort_asc == false) {
+//            Collections.sort(data, Collections.reverseOrder(new SortUtil()));
+//            sort_asc = true;
+//        } else {
+//            SORT_FACTOR = 6;
+//            Collections.sort(data, new SortUtil());
+//            sort_asc = false;
+//        }
+//    }
+//    public static void sortByPersenSelesai(List<Aduan> data) {
+//        if (SORT_FACTOR == 7 && sort_asc == false) {
+//            Collections.sort(data, Collections.reverseOrder(new SortUtil()));
+//            sort_asc = true;
+//        } else {
+//            SORT_FACTOR = 7;
+//            Collections.sort(data, new SortUtil());
+//            sort_asc = false;
+//        }
+//    }
+
+    public static void sortByTotal(List<Aduan> data) {
         if (SORT_FACTOR == 5 && sort_asc == false) {
             Collections.sort(data, Collections.reverseOrder(new SortUtil()));
             sort_asc = true;
         } else {
             SORT_FACTOR = 5;
-            Collections.sort(data, new SortUtil());
-            sort_asc = false;
-        }
-    }
-    public static void sortByPersenProses(List<Aduan> data) {
-        if (SORT_FACTOR == 6 && sort_asc == false) {
-            Collections.sort(data, Collections.reverseOrder(new SortUtil()));
-            sort_asc = true;
-        } else {
-            SORT_FACTOR = 6;
-            Collections.sort(data, new SortUtil());
-            sort_asc = false;
-        }
-    }
-    public static void sortByPersenSelesai(List<Aduan> data) {
-        if (SORT_FACTOR == 7 && sort_asc == false) {
-            Collections.sort(data, Collections.reverseOrder(new SortUtil()));
-            sort_asc = true;
-        } else {
-            SORT_FACTOR = 7;
-            Collections.sort(data, new SortUtil());
-            sort_asc = false;
-        }
-    }
-
-    public static void sortByTotal(List<Aduan> data) {
-        if (SORT_FACTOR == 8 && sort_asc == false) {
-            Collections.sort(data, Collections.reverseOrder(new SortUtil()));
-            sort_asc = true;
-        } else {
-            SORT_FACTOR = 8;
             Collections.sort(data, new SortUtil());
             sort_asc = false;
         }
@@ -119,16 +119,16 @@ public class SortUtil implements Comparator<Aduan> {
                 return a1.getjumlAduanProses().compareToIgnoreCase(a2.getjumlAduanProses());
             case 4:
                 return a1.getJumlAduanSelesai().compareToIgnoreCase(a2.getJumlAduanSelesai());
+//            case 5:
+////                return a1.getPersenBelum().compareToIgnoreCase(a2.getPersenBelum());
+//                return Float.compare(a1.getPersentaseBelum(),a2.getPersentaseBelum());
+//            case 6:
+////                return a1.getPersenProses().compareToIgnoreCase(a2.getPersenProses());
+//                return Float.compare(a1.getPersentaseProses(),a2.getPersentaseProses());
+//            case 7:
+////                return a1.getPersenSelesai().compareToIgnoreCase(a2.getPersenSelesai());
+//                return Float.compare(a1.getPersentaseSelesai(),a2.getPersentaseSelesai());
             case 5:
-//                return a1.getPersenBelum().compareToIgnoreCase(a2.getPersenBelum());
-                return Float.compare(a1.getPersentaseBelum(),a2.getPersentaseBelum());
-            case 6:
-//                return a1.getPersenProses().compareToIgnoreCase(a2.getPersenProses());
-                return Float.compare(a1.getPersentaseProses(),a2.getPersentaseProses());
-            case 7:
-//                return a1.getPersenSelesai().compareToIgnoreCase(a2.getPersenSelesai());
-                return Float.compare(a1.getPersentaseSelesai(),a2.getPersentaseSelesai());
-            case 8:
                 return Float.compare(a1.getTotalfloat(),a2.getTotalfloat());
         }
     }
