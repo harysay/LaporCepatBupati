@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="5dp"
+    card_view:contentPadding="5dp"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardMaxElevation="5dp">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:text="Selesai"
+            android:id="@+id/status_aduan"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/status_aduan"
+            android:layout_marginLeft="5dp"
+            android:textSize="14dp"
+            android:textColor="#9b9b9b"
+            android:paddingBottom="10dp"
+            android:text="197008281997031012"
+            android:id="@+id/tgl_aduan"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tgl_aduan"
+            android:layout_marginLeft="5dp"
+            android:textSize="16dp"
+            android:maxLines="5"
+            android:text="Isi aduannya dijabarkan ini sepanjang maksimal 5 baris"
+            android:id="@+id/isi_aduan"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/idAduan"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

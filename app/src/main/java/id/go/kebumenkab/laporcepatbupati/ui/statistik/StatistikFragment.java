@@ -1,6 +1,7 @@
 package id.go.kebumenkab.laporcepatbupati.ui.statistik;
 
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -97,7 +98,7 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
                                 for (int i = 0; i < response.length(); i++) {
                                     JSONObject jsonPost = response.getJSONObject(i);
                                     String namaKategori = jsonPost.getString("kategori_nm");
-                                    String namaSkpd = jsonPost.getString("skpd_nm");
+                                    String namaSkpd = jsonPost.getString("akronim");
                                     String jumlAduanBelum = jsonPost.getString("jml_aduan_belum");
                                     String jumlAduanProses = jsonPost.getString("jml_aduan_proses");
                                     String jumlAduanSelesai = jsonPost.getString("jml_aduan_selesai");
@@ -136,7 +137,7 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
 
         for (int i = 0; i < no_of_pages; i++) {
             buttons[i] = new Button(getActivity());
-            buttons[i].setBackgroundColor(getResources().getColor(android.R.color.white));
+            buttons[i].setBackgroundColor(R.style.Theme_LaporCepatBupati);
             buttons[i].setText(String.valueOf(i + 1));
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -156,7 +157,24 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
     }
 
     private void showPageNo(int j, int no_of_pages) {
-        Snackbar.make(buttonLayout, "Page " + (j + 1) + " of " + no_of_pages, Snackbar.LENGTH_LONG).setBackgroundTint(getResources().getColor(R.color.transparent)).show();
+
+        int nightModeFlags =
+                getContext().getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                Snackbar.make(buttonLayout, "Page " + (j + 1) + " of " + no_of_pages, Snackbar.LENGTH_LONG).setBackgroundTint(getResources().getColor(R.color.purple_200)).show();
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                Snackbar.make(buttonLayout, "Page " + (j + 1) + " of " + no_of_pages, Snackbar.LENGTH_LONG).setBackgroundTint(getResources().getColor(R.color.transparent)).show();
+                break;
+
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                Snackbar.make(buttonLayout, "Page " + (j + 1) + " of " + no_of_pages, Snackbar.LENGTH_LONG).setBackgroundTint(getResources().getColor(R.color.transparent)).show();
+                break;
+        }
+
     }
 
     private void checkBtnBackGroud(int index) {
@@ -306,8 +324,8 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
         textViewTotal.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.3f));
 
         textViewNo.setGravity(Gravity.CENTER);
-        textViewKategori.setGravity(Gravity.LEFT);
-        textViewSkpd.setGravity(Gravity.LEFT);
+        textViewKategori.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        textViewSkpd.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         textViewJmlBlm.setGravity(Gravity.CENTER);
         textViewJmlProses.setGravity(Gravity.CENTER);
         textViewJmlSelesai.setGravity(Gravity.CENTER);

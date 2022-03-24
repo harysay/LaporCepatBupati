@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import id.go.kebumenkab.laporcepatbupati.R;
 import id.go.kebumenkab.laporcepatbupati.TambahAduan;
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment {
         iv_inst = (ImageView)rootHome.findViewById(R.id.instagram);
         iv_twit = (ImageView)rootHome.findViewById(R.id.twitter);
         iv_fb = (ImageView)rootHome.findViewById(R.id.facebook);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle("");
         btnKeTambahAduan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

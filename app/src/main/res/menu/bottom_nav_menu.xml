@@ -9,10 +9,13 @@
     <item
         android:id="@+id/navigation_statistik"
         android:icon="@drawable/ic_baseline_statistik_24"
-        android:title="Statistik" />
-
+        android:title="Statistics" />
     <item
         android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="History" />
+    <item
+        android:id="@+id/navigation_about"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="About" />
 

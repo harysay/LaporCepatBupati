@@ -16,10 +16,15 @@
         android:name="id.go.kebumenkab.laporcepatbupati.ui.statistik.StatistikFragment"
         android:label="Statistik"
         tools:layout="@layout/fragment_statistik" />
-
     <fragment
         android:id="@+id/navigation_history"
         android:name="id.go.kebumenkab.laporcepatbupati.ui.history.HistoryFragment"
-        android:label="About"
+        android:label="History"
         tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="id.go.kebumenkab.laporcepatbupati.ui.tentang.TentangFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_tentang" />
 </navigation>

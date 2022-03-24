@@ -87,20 +87,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void getViewByUser(String accountName){
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        if(accountName.equals("harypoenya91@gmail.com")){
-            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.navigation_home, R.id.navigation_statistik, R.id.navigation_history).build();
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-            NavigationUI.setupWithNavController(navView, navController);
-        }else {
-            navView.getMenu().removeItem(R.id.navigation_statistik);
-            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.navigation_home, R.id.navigation_history).build();
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-            NavigationUI.setupWithNavController(navView, navController);
-        }
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_statistik, R.id.navigation_history, R.id.navigation_about).build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
+//        if(accountName.equals("harypoenya91@gmail.com")){
+//            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                    R.id.navigation_home, R.id.navigation_statistik, R.id.navigation_history).build();
+//            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//            NavigationUI.setupWithNavController(navView, navController);
+//        }else {
+//            navView.getMenu().removeItem(R.id.navigation_statistik);
+//            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                    R.id.navigation_home, R.id.navigation_history).build();
+//            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//            NavigationUI.setupWithNavController(navView, navController);
+//        }
     }
 
     @Override
