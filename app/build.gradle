@@ -10,8 +10,8 @@ android {
         applicationId "id.go.kebumenkab.laporcepatbupati"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "Version 1.0.b.25022022"
+        versionCode 6
+        versionName "Ver1.0.b.18042022"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

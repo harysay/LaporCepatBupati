@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Lapor Cepat Bupati</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAlU1kCE-ryYU5S89QMUqfBnGjPLipSBo8</string>
+    <string name="link">By using Lapor Cepat Bupati you agree to our \n <a href="https://laporbup.kebumenkab.go.id/privacy_policy_laporcepatbupati.html">Privacy Policy</a></string>
 </resources>

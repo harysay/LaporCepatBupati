@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_statistik"
         android:name="id.go.kebumenkab.laporcepatbupati.ui.statistik.StatistikFragment"
-        android:label="Statistik"
+        android:label="Statistics"
         tools:layout="@layout/fragment_statistik" />
     <fragment
         android:id="@+id/navigation_history"

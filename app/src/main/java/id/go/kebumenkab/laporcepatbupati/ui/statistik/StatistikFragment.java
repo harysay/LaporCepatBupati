@@ -1,6 +1,8 @@
 package id.go.kebumenkab.laporcepatbupati.ui.statistik;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import id.go.kebumenkab.laporcepatbupati.R;
+import id.go.kebumenkab.laporcepatbupati.handler.CheckNetwork;
 import id.go.kebumenkab.laporcepatbupati.handler.Server;
 import id.go.kebumenkab.laporcepatbupati.ui.statistik.jsontable.model.Aduan;
 import id.go.kebumenkab.laporcepatbupati.ui.statistik.jsontable.utils.SortUtil;
@@ -72,7 +75,26 @@ public class StatistikFragment extends Fragment implements View.OnClickListener 
 //                getStatistik();
 //            }
 //        });
+        if (CheckNetwork.isInternetAvailable(getActivity()))
+        {
         getStatistik();
+        }else {
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+
+                alertDialog.setTitle("Tidak ada koneksi internet!");
+                alertDialog.setMessage("Cek koneksi internet Anda dan ulangi lagi");
+                alertDialog.setIcon(android.R.drawable.stat_sys_warning);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int n) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.show();
+            } catch (Exception e) {
+                //Log.d(Constants.TAG, "Show Dialog: "+e.getMessage());
+            }
+        }
         return rootStatistik;
     }
 

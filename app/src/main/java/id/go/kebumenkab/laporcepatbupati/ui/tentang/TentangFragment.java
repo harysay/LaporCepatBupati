@@ -3,6 +3,7 @@ package id.go.kebumenkab.laporcepatbupati.ui.tentang;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ TextView versionTV;
 //                    textView.setText(Server.version);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle("Versi aplikasi yang Anda pakai");
         getVersion();
+        TextView t2 = (TextView) rootTentang.findViewById(R.id.linkprivacypolicy);
+        t2.setMovementMethod(LinkMovementMethod.getInstance());
         return rootTentang;
     }
 

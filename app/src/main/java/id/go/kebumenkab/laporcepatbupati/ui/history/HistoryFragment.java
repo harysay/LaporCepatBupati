@@ -1,6 +1,8 @@
 package id.go.kebumenkab.laporcepatbupati.ui.history;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,9 +23,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -40,6 +48,8 @@ import java.util.List;
 
 import id.go.kebumenkab.laporcepatbupati.MainActivity;
 import id.go.kebumenkab.laporcepatbupati.R;
+import id.go.kebumenkab.laporcepatbupati.handler.AppController;
+import id.go.kebumenkab.laporcepatbupati.handler.CheckNetwork;
 import id.go.kebumenkab.laporcepatbupati.handler.Server;
 import id.go.kebumenkab.laporcepatbupati.ui.history.placeholder.DataAdapter;
 import id.go.kebumenkab.laporcepatbupati.ui.history.placeholder.RecyclerViewAdapter;
@@ -54,7 +64,7 @@ public class HistoryFragment extends Fragment {
     ProgressBar progressBarAduanSaya;
     TextView tungguLoadAduan;
     List<DataAdapter> ListOfdataAdapter;
-    private String TAG ;
+    private String TAG = "HistoryFragment";
     //    ConfigApp alamatIP = new ConfigApp();
 //    String IP_add = alamatIP.getIP();
     private static String HTTP_JSON_URL = Server.URL + "aduan?email=";
@@ -104,9 +114,26 @@ public class HistoryFragment extends Fragment {
         layoutManagerOfrecyclerView = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(layoutManagerOfrecyclerView);
-
+        if (CheckNetwork.isInternetAvailable(getActivity()))
+        {
         JSON_HTTP_CALL();
+        }else {
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
 
+                alertDialog.setTitle("Tidak ada koneksi internet!");
+                alertDialog.setMessage("Cek koneksi internet Anda dan ulangi lagi");
+                alertDialog.setIcon(android.R.drawable.stat_sys_warning);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int n) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.show();
+            } catch (Exception e) {
+                //Log.d(Constants.TAG, "Show Dialog: "+e.getMessage());
+            }
+        }
         // Implementing Click Listener on RecyclerView.
 //        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 //
@@ -161,10 +188,11 @@ public class HistoryFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
-                        JSONArray jsonAr ;
+
+//                        Log.d(TAG, response.toString());
                         try {
                             if(response.getString("status").equals("success")) {
+                                JSONArray jsonAr ;
                                 jsonAr = response.getJSONArray("data");
                                 ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle("Jumlah Aduan Anda (" + String.valueOf(jsonAr.length() + ")"));
                                 ParseJSonResponse(jsonAr);
@@ -182,14 +210,25 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    //This indicates that the reuest has either time out or there is no connection
+                } else if (error instanceof AuthFailureError) {
+                    //Error indicating that there was an Authentication Failure while performing the request
+                } else if (error instanceof ServerError) {
+                    //Indicates that the server responded with a error response
+                } else if (error instanceof NetworkError) {
+                    //Indicates that there was network error while performing the request
+                } else if (error instanceof ParseError) {
+                    // Indicates that the server response could not be parsed
+                }
                 //VolleyLog.d(TAG, "Error: " + error.getMessage());
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Log.e("ERROR", "Error occurred ", error);
+//                VolleyLog.d(TAG, "Error: " + error.getMessage());
+//                Log.e("ERROR", "Error occurred ", error);
             }
         });
+//        AppController.getInstance().addToRequestQueue(jsonObjReq, "getHistory");
 
         requestQueue = Volley.newRequestQueue(getActivity());
-
         requestQueue.add(jsonObjReq);
     }
 

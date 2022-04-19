@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("email", emailName);
             editor.putString("deviceid",deviceId);
             editor.commit();
-            Toast.makeText(MainActivity.this, emailName, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, emailName, Toast.LENGTH_SHORT).show();
         }else {
 //            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
 //            alertDialog.setTitle("Peringatan");

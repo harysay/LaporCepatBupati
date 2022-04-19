@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import id.go.kebumenkab.laporcepatbupati.R;
 import id.go.kebumenkab.laporcepatbupati.TambahAduan;
+import id.go.kebumenkab.laporcepatbupati.handler.CheckNetwork;
 
 public class HomeFragment extends Fragment {
 
@@ -50,8 +51,27 @@ public class HomeFragment extends Fragment {
         btnKeTambahAduan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (CheckNetwork.isInternetAvailable(getActivity()))
+                {
                     Intent i = new Intent(getActivity(), TambahAduan.class);
                     startActivity(i);
+                }else {
+                    try {
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+
+                        alertDialog.setTitle("Tidak ada koneksi internet!");
+                        alertDialog.setMessage("Cek koneksi internet Anda dan ulangi lagi");
+                        alertDialog.setIcon(android.R.drawable.stat_sys_warning);
+                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int n) {
+                                dialog.cancel();
+                            }
+                        });
+                        alertDialog.show();
+                    } catch (Exception e) {
+                        //Log.d(Constants.TAG, "Show Dialog: "+e.getMessage());
+                    }
+                }
             }
         });
         iv_wa.setOnClickListener(new View.OnClickListener() {
