@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import id.go.kebumenkab.laporcepatbupati.handler.Server;
-
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,31 +20,26 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.common.AccountPicker;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,10 +47,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
-
 import static android.view.View.GONE;
-
 public class TambahAduan extends AppCompatActivity implements View.OnClickListener {
 
     private EditText deskripsi;
@@ -67,11 +57,11 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
     private TextView tvPhoto;
     private String status ="";
     private ProgressBar progressBar;
-//    private String wargaEmail,wargaDeviceId;
+    //    private String wargaEmail,wargaDeviceId;
     private boolean imageAvail = false;
     private int bitmap_size = 100;
     private String latitude, longitude;
-//    private LinearLayout lokasi;
+    //    private LinearLayout lokasi;
     private Uri filePath;
     private ByteArrayOutputStream byteArrayOutputStreamObject ;
     private File imageFile;
@@ -83,8 +73,6 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
     // IMAGE HANDLING METHODS ------------------------------------------------------------------------
     int CAMERA      = 0;
     int GALLERY     = 1;
-    int KATEGORI    = 2;
-    int LOKASI      = 3;
 
 //    private PrefManager prefManager;
 
@@ -97,51 +85,26 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
     private void initViews(){
         progressBar     = (ProgressBar)findViewById(R.id.progress_bar);
         progressBar.setVisibility(GONE);
-
-//        judul           = (EditText)findViewById(R.id.title);
         deskripsi       = (EditText)findViewById(R.id.description);
-//        kategori        = (TextView)findViewById(R.id.kategori);
         tvPhoto         = (TextView)findViewById(R.id.tv_photo);
-//        tvLokasi        = (TextView)findViewById(R.id.lokasi);
-        photoButton = (Button)findViewById(R.id.btn_takpic);
-
+        photoButton     = (Button)findViewById(R.id.btn_takpic);
         imageView       =  (ImageView)findViewById(R.id.image_view);
-//        imageKategori   = (ImageView)findViewById(R.id.image_kategori);
-
-//        imagePickerBtn  = (Button) findViewById(R.id.btn_image);
-//        kategoriBtn     = (Button) findViewById(R.id.pilih_kategori);
         sendBtn         = (Button)findViewById(R.id.send);
-
-//        lokasi          =  (LinearLayout)findViewById(R.id.lokasi_layout);
-
-//        tvLokasi.setOnClickListener(this);
         sendBtn.setOnClickListener(this);
-//        imagePickerBtn.setOnClickListener(this);
-//        kategoriBtn.setOnClickListener(this);
-
-//        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         SharedPreferences mSettings = TambahAduan.this.getSharedPreferences("logSession", Context.MODE_PRIVATE);
         usrRealSession = mSettings.getString("email","Pengguna");
         deviceId = mSettings.getString("deviceid","anonim");
-//        emailId = getEmail(this); //getEmail(this);
-//        Toast.makeText(TambahAduan.this, deviceId +"\n"+ emailId, Toast.LENGTH_SHORT).show();
         latitude = "-";
         longitude = "-";
-//        try {
-//            Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-//                    new String[] { GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE }, false, null, null, null, null);
-//            startActivityForResult(intent, REQUEST_CODE_EMAIL);
-//        } catch (ActivityNotFoundException e) {
-//            // TODO
-//        }
-
+//        findViewById(R.id.btn_takpic).setOnClickListener(view -> showBottomSheetDialog());
         photoButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 if(checkAndRequestPermissions(TambahAduan.this)){
-                    chooseImage(TambahAduan.this);
+//                    chooseImage(TambahAduan.this);
+                    showBottomSheetDialog();
                 }
             }
         });
@@ -149,35 +112,24 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
     }
 
     // function to let's the user to choose image from camera or gallery
-
     private void chooseImage(Context context){
 
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
-
         // create a dialog for showing the optionsMenu
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
         // set the items in builder
-
         builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
                 if(optionsMenu[i].equals("Take Photo")){
-
                     // Open the camera and get the photo
-
                     Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(takePicture, 0);
                 }
                 else if(optionsMenu[i].equals("Choose from Gallery")){
-
                     // choose from  external storage
-
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(pickPhoto , 1);
-
                 }
                 else if (optionsMenu[i].equals("Exit")) {
                     dialogInterface.dismiss();
@@ -188,31 +140,70 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
         builder.show();
     }
 
+    private void showBottomSheetDialog() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_layout, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        bottomSheetDialog.findViewById(R.id.takePhoto).setOnClickListener(v -> {
+//            openCamera();
+            Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(takePicture, 0);
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetDialog.findViewById(R.id.chooseFromGallery).setOnClickListener(v -> {
+            Intent chosePicture = new Intent(MediaStore.ACTION_PICK_IMAGES);
+            startActivityForResult(chosePicture, 1);
+//            openGallery();
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetDialog.findViewById(R.id.exit).setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+        bottomSheetDialog.show();
+    }
+
 
     // function to check permission
-
     public static boolean checkAndRequestPermissions(final Activity context) {
         int WExtstorePermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int cameraPermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.CAMERA);
+
         List<String> listPermissionsNeeded = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            listPermissionsNeeded.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE);
+            listPermissionsNeeded.add(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
+            listPermissionsNeeded.add(Manifest.permission.READ_MEDIA_IMAGES);
+        }else {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
         if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
         }
         if (WExtstorePermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded
-                    .add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            listPermissionsNeeded.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE);
+            listPermissionsNeeded.add(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
+            listPermissionsNeeded.add(Manifest.permission.READ_MEDIA_IMAGES);
         }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(context, listPermissionsNeeded
-                            .toArray(new String[listPermissionsNeeded.size()]),
-                    REQUEST_ID_MULTIPLE_PERMISSIONS);
-            return false;
-        }
+//        if (!listPermissionsNeeded.isEmpty()) {
+//            ActivityCompat.requestPermissions(context, listPermissionsNeeded
+//                            .toArray(new String[listPermissionsNeeded.size()]),
+//                    REQUEST_ID_MULTIPLE_PERMISSIONS);
+//            return false;
+//        }
         return true;
     }
 
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAMERA);
+        }
+    }
 
     String getEmail(Context context) {
         AccountManager accountManager = AccountManager.get(context);
@@ -240,7 +231,6 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-
         if(view == sendBtn){
             if (validate()) {
                 kirimAduanByFile();
@@ -250,21 +240,13 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
 
     // OPEN GALLERY
     public void openGallery() {
-        //Create an Intent with action as ACTION_PICK
-        Intent intent=new Intent(Intent.ACTION_PICK);
-        // Sets the type as image/*. This ensures only components of type image are selected
-        intent.setType("image/*");
-        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
-        String[] mimeTypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        // Launching the Intent
-        startActivityForResult(Intent.createChooser(intent, "Pilih Gambar"), GALLERY);
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto, GALLERY);
     }
 
     //kompres image
     public File saveBitmapToFile(File file){
         try {
-
             // BitmapFactory options to downsize the image
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
@@ -289,37 +271,32 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
             inputStream = new FileInputStream(file);
-
             Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
             inputStream.close();
-
             // here i override the original image file
             file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);
-
             selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
-
             return file;
         } catch (Exception e) {
             return null;
         }
     }
 
-    //fungsi maps
-    private void openMaps(){
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-        startActivityForResult(intent, LOKASI);
-    }
-
     //validasi inputan
     public boolean validate() {
         boolean valid = true;
-        teksDeskripsi = deskripsi.getText().toString();
+        String teksDeskripsi = deskripsi.getText().toString();
         if (teksDeskripsi.isEmpty()) {
-            deskripsi.setError("Harap isi deskripsi");
+            Toast.makeText(TambahAduan.this, "Harap isi deskripsi aduan", Toast.LENGTH_LONG).show();
             valid = false;
         } else {
             deskripsi.setError(null);
+        }
+
+        if (!imageAvail) {
+            Toast.makeText(TambahAduan.this, "Harap pilih gambar", Toast.LENGTH_LONG).show();
+            valid = false;
         }
 
         return valid;
@@ -338,10 +315,7 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-
-
         progressBar.setVisibility(View.VISIBLE);
-
         if(imageAvail==true){
             try {
                 AndroidNetworking.upload(Server.TAMBAH_ADUAN)
@@ -531,52 +505,52 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
                         filePath = data.getData();
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                            imageAvail = true;
-                                String scheme = filePath.getScheme();
-        //                        System.out.println("Scheme type " + scheme);
-                                Log.e("Scheme type", "Scheme type: " + scheme);
-                                if(scheme.equals(ContentResolver.SCHEME_CONTENT))
-                                {
-                                    try {
-                                        InputStream fileInputStream=getApplicationContext().getContentResolver().openInputStream(filePath);
-                                        dataSize = fileInputStream.available();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-        //                            System.out.println("File size in bytes"+dataSize);
-                                    Log.e("FileSizeContent", "File size in bytes"+dataSize);
-                                    ukuranFile = dataSize;
+                        imageAvail = true;
+                        String scheme = filePath.getScheme();
+                        //                        System.out.println("Scheme type " + scheme);
+                        Log.e("Scheme type", "Scheme type: " + scheme);
+                        if(scheme.equals(ContentResolver.SCHEME_CONTENT))
+                        {
+                            try {
+                                InputStream fileInputStream=getApplicationContext().getContentResolver().openInputStream(filePath);
+                                dataSize = fileInputStream.available();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            //                            System.out.println("File size in bytes"+dataSize);
+                            Log.e("FileSizeContent", "File size in bytes"+dataSize);
+                            ukuranFile = dataSize;
 
-                                }
-                                else if(scheme.equals(ContentResolver.SCHEME_FILE))
-                                {
-                                    String path = filePath.getPath();
-                                    try {
-                                        fil = new File(path);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-        //                            System.out.println("File size in bytes"+fil.length());
-                                    Log.e("FileSizeFile", "File size in bytes"+fil.length());
-                                }
+                        }
+                        else if(scheme.equals(ContentResolver.SCHEME_FILE))
+                        {
+                            String path = filePath.getPath();
+                            try {
+                                fil = new File(path);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            //                            System.out.println("File size in bytes"+fil.length());
+                            Log.e("FileSizeFile", "File size in bytes"+fil.length());
+                        }
 
 
 //                            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                            // Get the cursor
-                            Cursor cursor = getContentResolver().query(filePath, filePathColumn, null, null, null);
-                            // Move to first row
-                            cursor.moveToFirst();
-                            //Get the column index of MediaStore.Images.Media.DATA
-                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                            //Gets the String value in the column
-                            String imgDecodableString = cursor.getString(columnIndex);
+                        // Get the cursor
+                        Cursor cursor = getContentResolver().query(filePath, filePathColumn, null, null, null);
+                        // Move to first row
+                        cursor.moveToFirst();
+                        //Get the column index of MediaStore.Images.Media.DATA
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        //Gets the String value in the column
+                        String imgDecodableString = cursor.getString(columnIndex);
 
-                            cursor.close();
-                            // Set the Image in ImageView after decoding the String
-                            imageView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
+                        cursor.close();
+                        // Set the Image in ImageView after decoding the String
+                        imageView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
 
-                            String imagepath = getRealPathFromURI(filePath,this);
-                            imageFile = new File(imagepath);
+                        String imagepath = getRealPathFromURI(filePath,this);
+                        imageFile = new File(imagepath);
 //                        }
 
                     }
@@ -585,7 +559,7 @@ public class TambahAduan extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-//    dipanggil dari onActivityResult
+    //    dipanggil dari onActivityResult
     public String getRealPathFromURI(Uri contentURI, Activity context) {
         String[] projection = { MediaStore.Images.Media.DATA };
         @SuppressWarnings("deprecation")

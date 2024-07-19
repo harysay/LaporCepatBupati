@@ -3,15 +3,16 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.3"
+    compileSdk 34
+//    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "id.go.kebumenkab.laporcepatbupati"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 6
-        versionName "Ver1.0.b.18042022"
+        minSdk 21
+        targetSdk 34
+        multiDexEnabled true
+        versionCode 7
+        versionName "Ver1.0.b.19072024"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +27,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'id.go.kebumenkab.laporcepatbupati'
     buildFeatures {
         viewBinding true
     }

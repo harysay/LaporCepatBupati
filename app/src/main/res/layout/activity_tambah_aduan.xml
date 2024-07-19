@@ -10,35 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-
             android:layout_height="0dp"
             android:layout_weight="7"
             android:padding="16dp">
-
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:id="@+id/titleLayout"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:focusable="true"-->
-<!--                    android:focusableInTouchMode="true"-->
-<!--                    android:hint="Judul">-->
-
-<!--                    <EditText-->
-<!--                        android:id="@+id/title"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="16dp" />-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/description_layout"
@@ -47,83 +27,14 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:hint="Isi Aduan">
-
                     <EditText
                         android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:lines="3"
-                        android:maxLines="3" />
+                        android:lines="5"
+                        android:maxLines="5" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/kategori_layout"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@id/description_layout"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/image_kategori"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="50dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:src="@drawable/placeholder" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/kategori"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_marginLeft="8dp"-->
-<!--                        android:layout_weight="2"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:text="Belum Pilih Kategori"></TextView>-->
-
-<!--                    <Button-->
-<!--                        android:id="@+id/pilih_kategori"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="50dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="Pilih" />-->
-
-
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/lokasi_layout"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@id/description_layout"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:background="#D7E734"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:padding="8dp"-->
-<!--                    android:paddingTop="8dp"-->
-<!--                    android:paddingBottom="8dp">-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="18dp"-->
-<!--                        android:layout_height="18dp"-->
-<!--                        app:srcCompat="@drawable/ic_location_on_red_24dp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/lokasi"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_marginLeft="8dp"-->
-<!--                        android:layout_weight="2"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:text="Tambah Lokasi? Klik di sini!"-->
-<!--                        android:textColor="@color/colorPrimary"></TextView>-->
-
-
-<!--                </LinearLayout>-->
-
-
                 <LinearLayout
                     android:id="@+id/gambar_layout"
                     android:layout_width="match_parent"
@@ -131,19 +42,16 @@
                     android:layout_below="@id/description_layout"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Foto"
                             android:textStyle="bold" />
-
                         <TextView
                             android:id="@+id/tv_photo"
                             android:layout_width="0dp"
@@ -153,13 +61,13 @@
                             android:text=""
                             android:visibility="invisible" />
                     </LinearLayout>
-
                     <ImageView
                         android:id="@+id/image_view"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="300dp"
                         android:layout_marginTop="8dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="center"
                         android:src="@drawable/placeholder" />
                     <Button
                         android:id="@+id/btn_takpic"
@@ -169,67 +77,7 @@
                         android:layout_gravity="center"
                         android:drawableLeft="@drawable/ic_add_a_photo_black_24dp"
                         android:text="Ambil Gambar" />
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content">-->
-<!--                        <Button-->
-<!--                            android:id="@+id/btn_image"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:layout_alignParentLeft="true"-->
-<!--                            android:drawableLeft="@drawable/ic_add_a_photo_black_24dp"-->
-<!--                            android:text="Pilih Foto" />-->
-<!--                        <Button-->
-<!--                            android:id="@+id/btn_takpic"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:layout_alignParentRight="true"-->
-<!--                            android:drawableLeft="@drawable/ic_add_a_photo_black_24dp"-->
-<!--                            android:text="Gunakan Kamera" />-->
-<!--                    </RelativeLayout>-->
-
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:scrollbars="none"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|center_horizontal"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:id="@+id/llImage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical|center_horizontal"
-                                android:orientation="horizontal">
-
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/img_post"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_margin="5dp"
-                                android:adjustViewBounds="true"
-                                android:maxHeight="100dp"
-                                android:padding="10dp"
-                                android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
-                        </LinearLayout>
-
-                    </HorizontalScrollView>
-
-
                 </LinearLayout>
-
-
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     android:layout_width="wrap_content"
@@ -238,7 +86,6 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
         </ScrollView>
-
         <Button
             android:id="@+id/send"
             android:layout_width="match_parent"
@@ -248,8 +95,5 @@
             android:text="Lapor"
             android:textColor="@color/white"
             android:textSize="24sp" />
-
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
