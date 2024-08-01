@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.go.kebumenkab.laporcepatbupati">
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
     </queries>
-
+    <queries>
+        <intent>
+            <action android:name="android.media.action.ACTION_PICK_IMAGES" />
+        </intent>
+    </queries>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-<!--    lokasi-->
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
-
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-feature android:name="android.hardware.camera" android:required="false"></uses-feature>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -33,9 +36,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LaporCepatBupati">
         <activity
-            android:name=".TambahAduan"
-            android:label="TambahAduan">
-        </activity>
+            android:name=".ui.TambahAduanActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -45,13 +47,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".MapsActivity"
-            android:label="Lokasi">
-        </activity>
+            android:label="Lokasi"></activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="id.go.kebumenkab.laporcepatbupati.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -70,22 +70,23 @@ public class MainActivity extends AppCompatActivity {
         });
         t.start();
 
-        SharedPreferences mSettings = MainActivity.this.getSharedPreferences("logSession", Context.MODE_PRIVATE);
-        String usrEmailSession = mSettings.getString("email",null);
-        if(usrEmailSession==null){
-            try {
-                Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-                        new String[] { GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE }, false, null, null, null, null);
-                startActivityForResult(intent, REQUEST_CODE_EMAIL);
-            } catch (ActivityNotFoundException e) {
-                // TODO
-            }
-        }else {
-            getViewByUser(usrEmailSession);
-        }
+//        SharedPreferences mSettings = MainActivity.this.getSharedPreferences("logSession", Context.MODE_PRIVATE);
+//        String usrEmailSession = mSettings.getString("email",null);
+        getViewByUser();
+//        if(usrEmailSession==null){
+//            try {
+//                Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+//                        new String[] { GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE }, false, null, null, null, null);
+//                startActivityForResult(intent, REQUEST_CODE_EMAIL);
+//            } catch (ActivityNotFoundException e) {
+//
+//            }
+//        }else {
+//            getViewByUser();
+//        }
     }
 
-    private void getViewByUser(String accountName){
+    private void getViewByUser(){
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_statistik, R.id.navigation_history, R.id.navigation_about).build();
@@ -112,13 +113,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_EMAIL && resultCode == RESULT_OK) {
-            String emailName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+//            String emailName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
             deviceId = Settings.Secure.getString(getContentResolver(),
                     Settings.Secure.ANDROID_ID);
-            getViewByUser(emailName);
+            getViewByUser();
             SharedPreferences sp = getSharedPreferences("logSession", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putString("email", emailName);
+//            editor.putString("email", emailName);
             editor.putString("deviceid",deviceId);
             editor.commit();
             //Toast.makeText(MainActivity.this, emailName, Toast.LENGTH_SHORT).show();

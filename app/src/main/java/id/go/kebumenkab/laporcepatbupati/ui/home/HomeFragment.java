@@ -21,8 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import id.go.kebumenkab.laporcepatbupati.R;
-import id.go.kebumenkab.laporcepatbupati.TambahAduan;
+//import id.go.kebumenkab.laporcepatbupati.TambahAduan;
 import id.go.kebumenkab.laporcepatbupati.handler.CheckNetwork;
+import id.go.kebumenkab.laporcepatbupati.ui.TambahAduanActivity;
 
 public class HomeFragment extends Fragment {
 
@@ -53,7 +54,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 if (CheckNetwork.isInternetAvailable(getActivity()))
                 {
-                    Intent i = new Intent(getActivity(), TambahAduan.class);
+                    Intent i = new Intent(getActivity(), TambahAduanActivity.class);
                     startActivity(i);
                 }else {
                     try {
