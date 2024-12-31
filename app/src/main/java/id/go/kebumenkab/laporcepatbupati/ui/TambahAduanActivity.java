@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -64,7 +65,8 @@ public class TambahAduanActivity extends AppCompatActivity {
     private File imageFile;
     int ukuranFile;
     private String status ="";
-    String deviceId="anonim";
+    String deviceId="";
+    String usrRealSession ="";
     private ProgressBar progressBar;
 
     @Override
@@ -102,6 +104,10 @@ public class TambahAduanActivity extends AppCompatActivity {
                 kirimAduanByFile();
             }
         });
+
+        SharedPreferences mSettings = this.getSharedPreferences("logSession", Context.MODE_PRIVATE);
+        usrRealSession = mSettings.getString("email","");
+        deviceId = mSettings.getString("deviceid","");
     }
 
     private void showImageSourceDialog() {
@@ -334,7 +340,7 @@ public class TambahAduanActivity extends AppCompatActivity {
                         .addMultipartFile("aduan_file", prosesGambar)
                         //.addMultipartFile("aduan_file", imageFileSource)
                         //.addMultipartParameter("return_id", "true")
-                        .addMultipartParameter("email", "usrRealSession")
+                        .addMultipartParameter("email", usrRealSession)
                         .addMultipartParameter("device_id", deviceId)
                         .addMultipartParameter("aduan_isi", deskripsiTeks.getText().toString())
                         .addMultipartParameter("ordinat_lat", "-")

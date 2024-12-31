@@ -1,5 +1,9 @@
 package id.go.kebumenkab.laporcepatbupati.ui.home;
 
+import static android.content.Context.ACCOUNT_SERVICE;
+//import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -8,8 +12,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.style.CharacterStyle;
+import android.text.style.UpdateAppearance;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +30,39 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+//import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import id.go.kebumenkab.laporcepatbupati.R;
 //import id.go.kebumenkab.laporcepatbupati.TambahAduan;
 import id.go.kebumenkab.laporcepatbupati.handler.CheckNetwork;
 import id.go.kebumenkab.laporcepatbupati.ui.TambahAduanActivity;
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.widget.Toast;
+import android.provider.Settings;
 
 public class HomeFragment extends Fragment {
 
     View rootHome;
     ImageView btnKeTambahAduan;
-//    TextView teksHome;
+    TextView tekskanal;
     ImageView iv_wa,iv_inst,iv_twit,iv_fb,iv_header;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    saveUserData();
+                } else {
+                    // Jika izin ditolak, tampilkan pesan ke pengguna
+                    Toast.makeText(requireContext(),"Jika ingin membuat laporan, izinkan aplikasi untuk hak akses yang diminta", Toast.LENGTH_LONG).show();
+                }
+            });
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +75,12 @@ public class HomeFragment extends Fragment {
 //        iv_header.setImageResource(R.drawable.headerlaporcepat);
 //        teksHome = (TextView) rootHome.findViewById(R.id.text_home);
 //        teksHome.setText(usrRealSession);
+        String text = "atau melalui kanal di bawah ini:";
+        tekskanal = (TextView) rootHome.findViewById(R.id.text_kanal);
+        SpannableString spannableString = new SpannableString(text);
+        spannableString.setSpan(new StrokeSpan(Color.BLACK, Color.RED, 1), 1, text.length(), Spanned.SPAN_COMPOSING);
+        tekskanal.setText(spannableString);
+
         btnKeTambahAduan = (ImageView) rootHome.findViewById(R.id.btnLaporCepat);
         iv_wa = (ImageView)rootHome.findViewById(R.id.wa);
         iv_inst = (ImageView)rootHome.findViewById(R.id.instagram);
@@ -52,26 +90,42 @@ public class HomeFragment extends Fragment {
         btnKeTambahAduan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CheckNetwork.isInternetAvailable(getActivity()))
-                {
-                    Intent i = new Intent(getActivity(), TambahAduanActivity.class);
-                    startActivity(i);
-                }else {
-                    try {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                // Mengecek apakah pengguna sudah memberikan izin
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
 
-                        alertDialog.setTitle("Tidak ada koneksi internet!");
-                        alertDialog.setMessage("Cek koneksi internet Anda dan ulangi lagi");
-                        alertDialog.setIcon(android.R.drawable.stat_sys_warning);
-                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int n) {
-                                dialog.cancel();
-                            }
-                        });
-                        alertDialog.show();
-                    } catch (Exception e) {
-                        //Log.d(Constants.TAG, "Show Dialog: "+e.getMessage());
+                    // Mengecek apakah koneksi internet tersedia
+                    if (CheckNetwork.isInternetAvailable(getActivity())) {
+                        // Jika izin dan koneksi internet tersedia, buka TambahAduanActivity
+                        Intent i = new Intent(getActivity(), TambahAduanActivity.class);
+                        startActivity(i);
+                    } else {
+                        try {
+                            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                            alertDialog.setTitle("Tidak ada koneksi internet!");
+                            alertDialog.setMessage("Cek koneksi internet Anda dan ulangi lagi");
+                            alertDialog.setIcon(android.R.drawable.stat_sys_warning);
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int n) {
+                                    dialog.cancel();
+                                }
+                            });
+                            alertDialog.show();
+                        } catch (Exception e) {
+                            // Log.d(Constants.TAG, "Show Dialog: "+e.getMessage());
+                        }
                     }
+                } else {
+                    // Jika izin belum diberikan, tampilkan pesan
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle("Akses Ditolak");
+                    alertDialog.setMessage("Jika ingin membuat laporan, izinkan aplikasi untuk hak akses yang diminta.");
+                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
                 }
             }
         });
@@ -139,5 +193,79 @@ public class HomeFragment extends Fragment {
             }
         });
         return rootHome;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Mengecek izin saat view sudah dibuat
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS);
+            } else {
+                saveUserData();
+            }
+        } else {
+            saveUserData();
+        }
+    }
+
+    private void saveUserData() {
+        String email = getEmailAddress();
+        String deviceId = getDeviceId();
+
+        if (email != null && deviceId != null) {
+            saveToSharedPreferences(email, deviceId);
+            //Toast.makeText(requireContext(), "Data saved to SharedPreferences", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(requireContext(), "Gagal memperoleh email dan ID laporan!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getEmailAddress() {
+        AccountManager accountManager = (AccountManager) requireContext().getSystemService(ACCOUNT_SERVICE);
+        Account[] accounts = accountManager.getAccountsByType("com.google");
+        if (accounts.length > 0) {
+            return accounts[0].name; // Mengambil email pertama yang terdaftar
+        }
+        return null;
+    }
+
+    private String getDeviceId() {
+        return Settings.Secure.getString(requireContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    private void saveToSharedPreferences(String email, String deviceId) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("logSession", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email);
+        editor.putString("deviceid", deviceId);
+        editor.apply();
+    }
+
+    // Inner class for custom StrokeSpan
+    public static class StrokeSpan extends CharacterStyle implements UpdateAppearance {
+        private final int strokeColor;
+        private final int textColor;
+        private final float strokeWidth;
+
+        public StrokeSpan(int textColor, int strokeColor, float strokeWidth) {
+            this.textColor = textColor;
+            this.strokeColor = strokeColor;
+            this.strokeWidth = strokeWidth;
+        }
+
+        @Override
+        public void updateDrawState(TextPaint textPaint) {
+            textPaint.setStyle(Paint.Style.STROKE);
+            textPaint.setStrokeWidth(strokeWidth);
+            textPaint.setColor(strokeColor);
+            textPaint.setAntiAlias(true);
+            textPaint.setMaskFilter(new BlurMaskFilter(9.5f, BlurMaskFilter.Blur.OUTER));
+
+            textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+            textPaint.setColor(textColor);
+        }
     }
 }
